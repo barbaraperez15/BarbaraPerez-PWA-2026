@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA TP 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+
+        <div>
+            <p>Nombre: {{nombre}}</p>
+            <p>Edad: {{edad}}</p>
+            <p>Ciudad: {{ciudad}}</p>
+            <p>Hola, mi nombre es {{nombre}}, tengo {{edad}} años y vivo en {{ciudad}}.</p>
+        </div>
+
+    </div>
+
+    <script>
+            var app = new Vue({
+            el: '#app',
+            data: {
+                nombre: "Ana García",
+                edad: 30,
+                ciudad: "Tupungato"
+            },
+            methods: {},
+            computed: {}
+            });
+    </script>
+    
+</body>
+</html>
