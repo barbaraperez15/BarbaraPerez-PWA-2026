@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PWA TP 2</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 </head>
 <body>
 
@@ -78,6 +79,10 @@
                 registroEventos.agregarEvento(nombre)
             }
 
+            var api = axios.create({
+            baseURL: 'https://jsonplaceholder.typicode.com'
+            })
+
             var app = new Vue({
             el: '#app',
             data: {
@@ -100,7 +105,29 @@
                         {id:Date.now(), texto: this.nuevaTarea, completada:false}
                     )
                     this.nuevaTarea=''
-                }
+                },
+                obtenerPost(postId){
+                    return api.get(
+                        '/posts/' + postId
+                    )
+                    .then(function(response) {
+                        return response.data;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    })
+            },
+                obtenerComments(postId){
+                return api.get(
+                    '/posts/' + postId + '/comments'
+                )
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
+            }
             },
             computed: {
                 tareasPendientes(){
