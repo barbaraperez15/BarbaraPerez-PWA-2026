@@ -25,6 +25,25 @@
             <button @click="contador--">Decrementar</button>
         </div>
 
+        <hr>
+
+        <div>
+
+            <p>Lista de tareas</p>
+            <ul>
+                <li v-for="tarea in tareas">
+                    {{tarea.texto}} <input type="checkbox" v-model="tarea.completada"> 
+                </li>
+            </ul>
+
+            <input type="text" v-model="nuevaTarea">
+            <button @click="agregarTarea">Añadir Tarea</button>
+
+            <p>Tareas Pendientes: {{tareasPendientes}} </p>
+            <p>Total de Tareas: {{totalTareas}} </p>
+
+        </div>
+
     </div>
 
     <script>
@@ -34,10 +53,41 @@
                 nombre: "Ana García",
                 edad: 30,
                 ciudad: "Tupungato",
-                contador: 0
+                contador: 0,
+                nuevaTarea: '',
+                tareas: [
+                    { id:1, texto: 'Aprender Vue', completada: false }, 
+                    { id:2, texto: 'Completar TP 1', completada: true }, 
+                    { id:3, texto: 'Completar TP 2', completada: false }, 
+                    { id:4, texto: 'Descargar librerias', completada: true },
+            ]
             },
-            methods: {},
-            computed: {}
+            methods: {
+                agregarTarea(){
+                    this.tareas.push(
+                        {id:Date.now(), texto: this.nuevaTarea, completada:false}
+                    )
+                    this.nuevaTarea=''
+                }
+            },
+            computed: {
+                tareasPendientes(){
+                    let pendientes = 0
+                    for (let tarea of this.tareas){
+                        if (tarea.completada == false) {
+                            pendientes++
+                        }
+                    }
+                    return pendientes
+                },
+                totalTareas(){
+                    let total = 0
+                    for (let tarea of this.tareas){
+                        total++
+                    }
+                    return total
+                }
+            }
             });
     </script>
     
