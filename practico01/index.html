@@ -44,9 +44,40 @@
 
         </div>
 
+        <hr>
+
+    </div>
+
+    <div id="eventos">
+        <p>Lista de eventos</p>
+        <ul>
+            <li v-for="evento in listaEventos">
+                Evento: {{ evento.nombre }} Timestamp: {{ evento.timestamp }}
+            </li>
+        </ul>
     </div>
 
     <script>
+            var registroEventos = new Vue({
+            el: '#eventos',
+            data: {
+                listaEventos: []
+            },
+            methods: {
+                agregarEvento(nombre) {
+                    this.listaEventos.push({
+                        id: this.listaEventos.length + 1,
+                        nombre: nombre,
+                        timestamp: Date.now()
+                    })
+                }
+            }
+            });
+
+            function registrarEvento(nombre) {
+                registroEventos.agregarEvento(nombre)
+            }
+
             var app = new Vue({
             el: '#app',
             data: {
@@ -60,7 +91,8 @@
                     { id:2, texto: 'Completar TP 1', completada: true }, 
                     { id:3, texto: 'Completar TP 2', completada: false }, 
                     { id:4, texto: 'Descargar librerias', completada: true },
-            ]
+                ]
+
             },
             methods: {
                 agregarTarea(){
@@ -87,7 +119,39 @@
                     }
                     return total
                 }
+            },
+            beforeCreate() {
+                registrarEvento('beforeCreate')
+            },
+
+            created() {
+                registrarEvento('created')
+            },
+
+            beforeMount() {
+                registrarEvento('beforeMount')
+            },
+
+            mounted() {
+                registrarEvento('mounted')
+            },
+
+            beforeUpdate() {
+                registrarEvento('beforeUpdate')
+            },
+
+            updated() {
+                registrarEvento('updated')
+            },
+
+            beforeDestroy() {
+                registrarEvento('beforeDestroy')
+            },
+
+            destroyed() {
+                registrarEvento('destroyed')
             }
+
             });
     </script>
     
