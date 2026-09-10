@@ -47,6 +47,27 @@
 
         <hr>
 
+        <div>
+
+            <p>Posts:</p>
+            <ul>
+                <li v-for="post in posts" @click="cargarComentarios(post.id)">
+                    Post {{post.id}}: {{post.title}}
+                </li>
+            </ul>
+
+            <p>Comentarios:</p>
+            <ul>
+                <li v-for="comment in comments">
+                    {{comment.name}}: {{comment.body}}
+                </li>
+            </ul>
+
+        </div>
+
+        <hr>
+        
+
     </div>
 
     <div id="eventos">
@@ -96,7 +117,9 @@
                     { id:2, texto: 'Completar TP 1', completada: true }, 
                     { id:3, texto: 'Completar TP 2', completada: false }, 
                     { id:4, texto: 'Descargar librerias', completada: true },
-                ]
+                ],
+                posts: [],
+                comments: []
 
             },
             methods: {
@@ -126,6 +149,16 @@
                 })
                 .catch(function(error) {
                     console.log(error);
+                })
+            },
+            cargarComentarios(postId) {
+                var that = this
+
+                this.comments = []
+
+                this.obtenerComments(postId)
+                .then(function(comentarios) {
+                    that.comments = comentarios
                 })
             }
             },
@@ -161,6 +194,15 @@
 
             mounted() {
                 registrarEvento('mounted')
+
+                var that = this
+
+                for (let postId = 1; postId <= 10; postId++) {
+                    this.obtenerPost(postId)
+                    .then(function(post) {
+                        that.posts.push(post)
+                    })
+                }
             },
 
             beforeUpdate() {
